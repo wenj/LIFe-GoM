@@ -1,0 +1,103 @@
+exp_name: "default"
+
+seed: 42
+
+bgcolor: [255., 255., 255.]
+img_size: [512, 512]
+use_smplx: false
+n_input_frames: 3
+
+# debug related configs
+debug_cov: false
+
+dataset:
+  train:
+    name: "none"
+    dataset_path: "data/thuman2.0/view3_train"
+    scene_list: [ "data/thuman2.0/train.json" ]
+    batch_size: 1
+    num_workers: 1
+
+    skip: 1
+
+    # for ghg
+    total_input_frames: 16
+    total_output_frames: 48
+    input_frame_interval: [5, 6]
+
+  test_view:
+    name: 'thuman2.0_view3'
+    dataset_path: "data/thuman2.0/view3_val"
+    scene_list: [ "data/thuman2.0/val.json" ]
+
+    batch_size: 1
+    num_workers: 1
+
+    skip: 1
+    total_input_frames: 3
+    total_output_frames: 3
+    input_frame_interval: [ 1 ]
+
+  test_freeview:
+    dataset_path: "data/thuman2.0/view3_val"
+    scene_list: [ "data/thuman2.0/view3_val_meta.json" ]
+
+    batch_size: 1
+    num_workers: 1
+
+  test_pose:
+    dataset_path: "data/thuman2.0/view3_val"
+    scene_list: [ "data/thuman2.0/view3_val_meta.json" ]
+
+    batch_size: 1
+    num_workers: 1
+
+model:
+  img_encoder:
+    rgb_embed: true
+
+  reconstructor:
+    n_subdivide_train: 1
+    n_subdivide: 2
+    appearance_feat_dim: 3
+    img_feat_dim: 1152
+    n_iters: 1
+
+    pretrain: 'pretrained_weights/PointTransformer/2022-04-13_18-29-56_POINTTRANS_C_32768/model.pth'
+
+  renderer:
+    save_K: false
+
+train:
+  optimizer: 'adam'
+
+  lr:
+    img_encoder: 0.00005
+    reconstructor: 0.0005
+    renderer: 0.005
+
+  losses:
+    rgb:
+      type: "l1"
+      coeff: 1.0
+
+    mask:
+      type: "l1"
+      coeff: 5.0
+
+    lpips:
+      coeff: 0.0
+      scale_factor: 1.0
+
+    ssim:
+      coeff: 0.0
+
+    laplacian:
+      coeff: 0.0
+
+  total_iters: 30000
+
+  log_freq: 10
+  tb_freq: 100
+  save_freq: 1000
+  eval_freq: 50000

@@ -1,0 +1,63 @@
+exp_name: "exp_aistpp_view5"
+
+random_bgcolor: false # following actorsnerf
+bgcolor: [255., 255., 255.]
+img_size: [960, 540]
+use_smplx: false
+n_input_frames: 5
+
+dataset:
+  train:
+    name: "default"
+    dataset_path: "data/aistpp/view5_trainval"
+    scene_list: ["data/aistpp/train.json"]
+
+    batch_size: 1
+    num_workers: 1
+
+  test_view:
+    name: "aistpp"
+    dataset_path: "data/aistpp/view5_trainval"
+    scene_list: ["d16_val", "d17_val", "d18_val", "d19_val", "d20_val"]
+
+    batch_size: 1
+    num_workers: 1
+
+model:
+  reconstructor:
+    n_subdivide: 1
+    appearance_feat_dim: 3
+    img_feat_dim: 1152
+    n_iters: 3
+
+  renderer:
+    save_K: false # aistpp has different intrinsics
+
+train:
+  losses:
+    rgb:
+      type: "l1"
+      coeff: 1.0
+
+    mask:
+      type: "l1"
+      coeff: 0.0
+
+    lpips:
+      coeff: 1.0
+      scale_factor: 0.5
+
+    laplacian:
+      coeff: 100.0
+
+  lr:
+    img_encoder: 0.00005
+    canonical_rep: 0.00005
+    non_rigid: 0.000005
+    pose_refinement: 0.000005
+
+  log_freq: 10
+  tb_freq: 1000
+  eval_freq: 500000000  # never evaluate during training
+  save_freq: 10000
+  total_iters: 100000

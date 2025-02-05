@@ -1,0 +1,89 @@
+exp_name: "exp_thuman2.0_view3"
+
+random_bgcolor: true
+bgcolor: [0., 0., 0.]
+img_size: [1024, 1024]
+use_smplx: true
+
+dataset:
+  train:
+    name: 'thuman2.0_view3'
+    dataset_path: "data/thuman2.0/view3_train"
+    scene_list: ["data/thuman2.0/train.json"]
+
+    batch_size: 1
+    num_workers: 1
+
+    skip: 1
+
+    total_input_frames: 16
+    total_output_frames: 48
+    input_frame_interval: [ 5, 6 ]
+
+  test_view:
+    name: 'thuman2.0_view3'
+    dataset_path: "data/xhuman/view3_val"
+    scene_list: ["data/xhuman/val.json"]
+
+    batch_size: 1
+    num_workers: 1
+
+    skip: 1
+    total_input_frames: 3
+    total_output_frames: 3
+    input_frame_interval: [ 1 ]
+
+  test_freeview:
+    dataset_path: "data/thuman2.0/view3_val"
+    scene_list: ["data/thuman2.0/val.json"]
+
+    batch_size: 1
+    num_workers: 1
+
+  test_pose:
+    dataset_path: "data/thuman2.0/view3_val"
+    scene_list: [ "data/thuman2.0/val.json" ]
+
+    batch_size: 1
+    num_workers: 1
+
+model:
+  reconstructor:
+    n_subdivide: 2 # set it to 1 during training if OOM
+    appearance_feat_dim: 3
+    img_feat_dim: 1152
+    n_iters: 3
+
+  renderer:
+    save_K: true
+
+train:
+  optimizer: 'adam'
+
+  losses:
+    rgb:
+      type: "l1"
+      coeff: 1.0
+
+    mask:
+      type: "l1"
+      coeff: 5.0
+
+    lpips:
+      coeff: 0.0
+
+    ssim:
+      coeff: 1.0
+
+    laplacian:
+      coeff: 100.0
+
+  lr:
+    img_encoder: 0.0001
+    reconstructor: 0.00005
+
+  log_freq: 10
+  tb_freq: 1000
+  eval_freq: 500000000 # never evaluate during training
+  save_freq: 10000
+  total_iters: 200000
