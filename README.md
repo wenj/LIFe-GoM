@@ -2,7 +2,7 @@
 
 ICLR 2025
 
-[Paper](https://arxiv.org/abs/2404.07991) | [Project Page](https://wenj.github.io/GoMAvatar/)
+[Paper](https://arxiv.org/abs/2502.09617) | [Project Page](https://wenj.github.io/LIFe-GoM/)
 
 ```bibtex
 @inproceedings{wen2025lifegom,
