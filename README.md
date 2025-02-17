@@ -42,7 +42,7 @@ Download the pretrained weights from [this link](https://uofi.box.com/s/bsm1so0f
 Please refer to [DATASET.md](docs/DATASET.md) for data preparation.
 
 ## Inference
-You can find the checkpoints and rendered results [here](https://uofi.box.com/s/78p388b97wibh9sbt7pentfz4baj1745).
+You can find the checkpoints and rendered results [here](https://uofi.box.com/s/gi8sv875hard3eopjrmly8yxx2r1w7k8).
 
 ### Freeview rendering
 To render 360 degree freeview images, run:
@@ -59,7 +59,7 @@ python inference.py --type pose --cfg $CONFIG_FILE --scene_idx $SCENE_IDX --pose
 An example of `$POSE_FILE` is in `data/pose_example.npz`. You can try `python inference.py --type pose --cfg exps/exp_thuman2.0_view3.yaml --pose_path data/pose_example.npz --pose_name example`.
 
 ### Novel view synthesis & evaluation
-To replicate the quantitative results in the paper, you can either download the rendered images [here](https://uofi.box.com/s/78p388b97wibh9sbt7pentfz4baj1745) or render the test set on your own:
+To replicate the quantitative results in the paper, you can either download the rendered images [here](https://uofi.box.com/s/gi8sv875hard3eopjrmly8yxx2r1w7k8) or render the test set on your own:
 ```Shell
 # 3 input views on THuman2.0
 python inference.py --cfg exps/exp_thuman2.0_view3.yaml
